@@ -1,0 +1,54 @@
+<section class="hero page-width">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="kiyoh-badge a-0">{% render 'icon', name: 'star', size: 15 %} {{ settings.kiyoh_score }} Kiyoh-score · {{ settings.kiyoh_count }} beoordelingen</div>
+      <h1 class="a-1 heading-font">{{ section.settings.heading }}</h1>
+      <p class="hero-sub a-2">{{ section.settings.subtext }}</p>
+      <div class="hero-cta-row a-3">
+        <a class="btn btn-primary" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label }} {% render 'icon', name: 'arrow', size: 16 %}</a>
+        {%- if section.settings.cta2_label != blank -%}
+          <a class="btn btn-secondary" href="{{ section.settings.cta2_link | default: routes.all_products_collection_url }}">{{ section.settings.cta2_label }}</a>
+        {%- endif -%}
+      </div>
+      <ul class="trust-row a-4">
+        <li>{% render 'icon', name: 'cart', size: 18 %} Gratis verzending v.a. €{{ settings.free_shipping_threshold }}</li>
+        <li>{% render 'icon', name: 'card', size: 18 %} Achteraf betalen met Klarna</li>
+        <li>{% render 'icon', name: 'clock', size: 18 %} {{ settings.delivery_promise }}</li>
+      </ul>
+    </div>
+    <div class="hero-visual-wrap">
+      <div class="tilt-wrap" data-tilt>
+        <div class="hero-visual a-img" data-tilt-target>
+          {%- if section.settings.image != blank -%}
+            {{ section.settings.image | image_url: width: 920 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '460, 690, 920', sizes: '(min-width: 861px) 460px, 90vw', alt: section.settings.image.alt | default: section.settings.heading, class: 'hero-img' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'hero-img placeholder' }}
+          {%- endif -%}
+        </div>
+        <div class="floating-card a-card-1" data-tilt-float="1">
+          <span class="fc-ico">{% render 'icon', name: 'cart', size: 17 %}</span>
+          <div><strong>Gratis verzending</strong><small>vanaf €{{ settings.free_shipping_threshold }}</small></div>
+        </div>
+        <div class="floating-card a-card-2" data-tilt-float="2">
+          <span class="fc-ico">{% render 'icon', name: 'star', size: 16 %}</span>
+          <div><strong>{{ settings.kiyoh_score }} / 10</strong><small>{{ settings.kiyoh_count }} Kiyoh-reviews</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Kop", "default": "Scherpe schoenen, zonder gedoe." },
+    { "type": "textarea", "id": "subtext", "label": "Subtekst", "default": "Dames schoenen, tassen en accessoires vanaf €8,99. Zorgvuldig uitgezocht, scherp geprijsd." },
+    { "type": "image_picker", "id": "image", "label": "Uitgelichte productfoto" },
+    { "type": "text", "id": "cta_label", "label": "Primaire knop", "default": "Shop nu" },
+    { "type": "url", "id": "cta_link", "label": "Primaire link" },
+    { "type": "text", "id": "cta2_label", "label": "Secundaire knop", "default": "Bekijk de sale" },
+    { "type": "url", "id": "cta2_link", "label": "Secundaire link" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

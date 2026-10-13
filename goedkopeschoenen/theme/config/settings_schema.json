@@ -1,0 +1,46 @@
+[
+  { "name": "theme_info", "theme_name": "GoedkopeSchoenen", "theme_version": "0.1.0", "theme_author": "GoedkopeSchoenen.com", "theme_documentation_url": "https://github.com/Rens191028/GoedkopeSchoenen.nl", "theme_support_url": "https://goedkopeschoenen.com/pages/contact" },
+  {
+    "name": "Bedrijfsgegevens",
+    "settings": [
+      { "type": "text", "id": "company_name", "label": "Bedrijfsnaam", "default": "GoedkopeSchoenen.com" },
+      { "type": "text", "id": "company_address", "label": "Adres", "default": "Taminiausingel 15, 6662MD Elst" },
+      { "type": "text", "id": "company_kvk", "label": "KvK-nummer", "default": "84772018" },
+      { "type": "text", "id": "company_btw", "label": "BTW-nummer", "default": "NL863360324B01" },
+      { "type": "text", "id": "company_phone", "label": "Telefoon", "default": "06-19671591" },
+      { "type": "text", "id": "company_email", "label": "E-mail", "default": "info@goedkopeschoenen.com" }
+    ]
+  },
+  {
+    "name": "Vertrouwen & verzending",
+    "settings": [
+      { "type": "text", "id": "kiyoh_score", "label": "Kiyoh-score", "default": "9,3", "info": "Controleer bij livegang." },
+      { "type": "text", "id": "kiyoh_count", "label": "Aantal Kiyoh-beoordelingen", "default": "6.531" },
+      { "type": "number", "id": "free_shipping_threshold", "label": "Gratis verzending vanaf (€)", "default": 65 },
+      { "type": "text", "id": "delivery_promise", "label": "Levertijd-belofte (overal gebruikt)", "default": "Op werkdagen voor 15:00 besteld, zelfde dag verzonden" },
+      { "type": "text", "id": "shipping_cost_text", "label": "Verzendkosten onder drempel", "default": "€5,99" }
+    ]
+  },
+  {
+    "name": "Logo & favicon",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon (PNG)" },
+      { "type": "text", "id": "logo_text", "label": "Merknaam naast icoon", "default": "GoedkopeSchoenen" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  },
+  {
+    "name": "Animaties",
+    "settings": [
+      { "type": "checkbox", "id": "enable_animations", "label": "Rustige entrance- en hover-animaties", "default": true },
+      { "type": "checkbox", "id": "enable_3d", "label": "3D-tilt op hero en productafbeelding", "default": true }
+    ]
+  }
+]

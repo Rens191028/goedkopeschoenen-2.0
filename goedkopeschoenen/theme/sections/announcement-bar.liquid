@@ -1,0 +1,20 @@
+<div class="announcement" data-announcement>
+  {%- for block in section.blocks -%}
+    <p class="announcement-item{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+      {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ block.settings.text }}</a>{%- else -%}{{ block.settings.text }}{%- endif -%}
+    </p>
+  {%- endfor -%}
+</div>
+{% schema %}
+{
+  "name": "Topbalk",
+  "max_blocks": 5,
+  "blocks": [
+    { "type": "message", "name": "Bericht", "settings": [
+      { "type": "text", "id": "text", "label": "Tekst", "default": "Zoolblij met elke bestelling — gratis verzending vanaf €65 · achteraf betalen met Klarna" },
+      { "type": "url", "id": "link", "label": "Link" }
+    ] }
+  ],
+  "presets": [{ "name": "Topbalk", "blocks": [{ "type": "message" }, { "type": "message", "settings": { "text": "Pantoffels 2 voor €24,99" } }] }]
+}
+{% endschema %}

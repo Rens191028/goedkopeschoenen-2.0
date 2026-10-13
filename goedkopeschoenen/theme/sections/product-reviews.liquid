@@ -1,0 +1,26 @@
+<section class="trust-section section-pad">
+  <div class="page-width">
+    <div class="section-head"><h2 class="heading-font">Wat klanten zeggen</h2><span class="muted">{{ settings.kiyoh_score }} / 10 · {{ settings.kiyoh_count }} Kiyoh-beoordelingen</span></div>
+    <div class="review-cards review-cards--3">
+      {%- for block in section.blocks -%}
+        <figure class="review-card reveal" style="--reveal-delay: {{ forloop.index0 | times: 90 }}ms" {{ block.shopify_attributes }}>
+          {% render 'stars', rating: block.settings.rating, size: 13 %}
+          <blockquote>“{{ block.settings.quote }}”</blockquote>
+          <figcaption class="muted small">{{ block.settings.name }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Reviews op productpagina",
+  "blocks": [{ "type": "review", "name": "Review", "settings": [
+    { "type": "textarea", "id": "quote", "label": "Citaat", "default": "Vervang door een echt Kiyoh-citaat." },
+    { "type": "text", "id": "name", "label": "Naam", "default": "Naam klant" },
+    { "type": "range", "id": "rating", "label": "Sterren", "min": 1, "max": 5, "step": 1, "default": 5 }
+  ] }],
+  "max_blocks": 6,
+  "presets": [{ "name": "Reviews op productpagina", "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }] }]
+}
+{% endschema %}
