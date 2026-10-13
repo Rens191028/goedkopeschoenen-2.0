@@ -1,0 +1,12 @@
+{%- comment -%} Toont alleen een van-prijs bij echte korting. {% render 'price', product: product %} {%- endcomment -%}
+{%- assign variant = product.selected_or_first_available_variant -%}
+{%- assign on_sale = false -%}
+{%- if variant.compare_at_price > variant.price -%}{%- assign on_sale = true -%}{%- endif -%}
+<div class="price-row" data-price>
+  {%- if on_sale -%}
+    <s class="price-was"><span class="visually-hidden">Normale prijs</span> {{ variant.compare_at_price | money }}</s>
+    <span class="price-now"><span class="visually-hidden">Aanbiedingsprijs</span> {{ variant.price | money }}</span>
+  {%- else -%}
+    <span class="price-plain">{{ variant.price | money }}</span>
+  {%- endif -%}
+</div>

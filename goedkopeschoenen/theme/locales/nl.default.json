@@ -1,0 +1,3 @@
+{
+  "general": { "tagged": "Getagd \"{{ tags }}\"", "page": "Pagina {{ page }}" }
+}

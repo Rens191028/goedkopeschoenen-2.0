@@ -1,0 +1,18 @@
+<section class="cart-page page-width section-pad">
+  <h1 class="heading-font">Winkelwagen</h1>
+  <div class="cart-page-body" data-cart-page-body>{% render 'cart-contents' %}</div>
+  {%- if cart.item_count > 0 and section.settings.cross_sell != blank -%}
+    <div class="cart-cross">
+      <h2 class="heading-font">{{ section.settings.cross_heading }}</h2>
+      <div class="product-grid">
+        {%- for product in section.settings.cross_sell.products limit: 4 -%}{% render 'product-card', product: product, index: forloop.index0 %}{%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+{% schema %}
+{ "name": "Winkelwagenpagina", "settings": [
+  { "type": "text", "id": "cross_heading", "label": "Kop cross-sell", "default": "Vaak samen gekocht" },
+  { "type": "collection", "id": "cross_sell", "label": "Cross-sell collectie" }
+] }
+{% endschema %}

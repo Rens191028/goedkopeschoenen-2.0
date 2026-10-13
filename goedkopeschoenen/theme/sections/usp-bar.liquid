@@ -1,0 +1,15 @@
+<div class="usp-bar">
+  <div class="usp-bar-inner page-width">
+    <span>{% render 'icon', name: 'phone', size: 18 %} Klantenservice 7 dagen per week</span>
+    <span>{% render 'icon', name: 'card', size: 18 %} Veilig betalen met iDeal of Klarna</span>
+    <span>{% render 'icon', name: 'box', size: 18 %} {{ section.settings.stock_text }}</span>
+    <span>{% render 'icon', name: 'star', size: 18 %} {{ settings.kiyoh_score }} op Kiyoh</span>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "USP-balk",
+  "settings": [{ "type": "text", "id": "stock_text", "label": "Voorraadtekst", "default": "750 producten, vrijwel alles op voorraad" }],
+  "presets": [{ "name": "USP-balk" }]
+}
+{% endschema %}

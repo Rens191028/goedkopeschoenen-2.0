@@ -1,0 +1,8 @@
+<div class="drawer drawer--right" id="cart-drawer" aria-hidden="true" data-drawer>
+  <div class="drawer-overlay" data-drawer-close></div>
+  <div class="drawer-panel" role="dialog" aria-label="Winkelwagen">
+    <div class="drawer-head"><span class="heading-font">Winkelwagen</span><button class="icon-btn" aria-label="Sluiten" data-drawer-close>{% render 'icon', name: 'close', size: 20 %}</button></div>
+    <div class="drawer-body" data-cart-drawer-body>{% render 'cart-contents' %}</div>
+  </div>
+</div>
+{% schema %}{ "name": "Winkelwagen-drawer" }{% endschema %}

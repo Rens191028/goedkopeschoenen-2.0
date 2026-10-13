@@ -1,0 +1,103 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<section class="product-page page-width" data-product-section data-product-url="{{ product.url }}">
+  <div class="product-layout">
+    <div class="product-gallery" data-gallery>
+      <div class="gallery-main" data-tilt data-tilt-max="8">
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+            <div class="gallery-slide{% if forloop.first %} is-active{% endif %}" data-slide="{{ forloop.index0 }}" data-tilt-target>
+              {{ media | image_url: width: 1200 | image_tag: loading: 'eager', widths: '600, 900, 1200', sizes: '(min-width: 861px) 50vw, 100vw', alt: media.alt | default: product.title }}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if product.media.size == 0 -%}<div class="gallery-slide is-active">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div>{%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="gallery-thumbs">
+          {%- for media in product.media -%}
+            <button type="button" class="thumb{% if forloop.first %} is-active{% endif %}" data-thumb="{{ forloop.index0 }}" aria-label="Foto {{ forloop.index }}">{{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}</button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-info">
+      <div class="kiyoh-badge small-badge">{% render 'icon', name: 'star', size: 14 %} {{ settings.kiyoh_score }} Kiyoh · {{ settings.kiyoh_count }} beoordelingen</div>
+      <h1 class="heading-font product-name">{{ product.title }}</h1>
+      <div data-price-wrap>{% render 'price', product: product %}</div>
+      <p class="muted small">Incl. btw{% if current_variant.sku != blank %} · Art.nr. <span data-sku>{{ current_variant.sku }}</span>{% endif %}</p>
+
+      {%- form 'product', product, id: 'product-form', class: 'product-form', data-product-form: '' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset class="option-group">
+              <legend>{{ option.name }}: <span data-option-label="{{ forloop.index0 }}">{{ option.selected_value }}</span></legend>
+              <div class="option-buttons">
+                {%- for value in option.values -%}
+                  <label class="option-btn">
+                    <input type="radio" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-index="{{ forloop.parentloop.index0 }}">
+                    <span>{{ value }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+        <script type="application/json" data-variants>{{ product.variants | json }}</script>
+        <div class="buy-row">
+          <div class="qty" data-qty-input>
+            <button type="button" data-qty-minus aria-label="Minder">−</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="Aantal">
+            <button type="button" data-qty-plus aria-label="Meer">+</button>
+          </div>
+          <button type="submit" class="btn btn-primary btn-grow" data-add-btn {% unless current_variant.available %}disabled{% endunless %}>
+            <span data-add-label>{% if current_variant.available %}Aan winkelwagen toevoegen{% else %}Uitverkocht{% endif %}</span> {% render 'icon', name: 'arrow', size: 16 %}
+          </button>
+        </div>
+      {%- endform -%}
+
+      {%- assign threshold = settings.free_shipping_threshold | default: 65 | times: 100 -%}
+      {%- assign remaining = threshold | minus: cart.total_price -%}
+      <div class="ship-progress ship-progress--compact">
+        <p class="ship-progress-text">{% if remaining > 0 %}Nog <strong>{{ remaining | money }}</strong> tot gratis verzending{% else %}Je bestelling wordt <strong>gratis verzonden</strong>{% endif %}</p>
+        <div class="ship-progress-track"><div class="ship-progress-bar" style="width: {{ cart.total_price | times: 100 | divided_by: threshold | at_most: 100 }}%"></div></div>
+      </div>
+
+      <ul class="service-cards">
+        <li>{% render 'icon', name: 'clock', size: 20 %}<div><strong>{{ settings.delivery_promise }}</strong><small>Via PostNL, ook naar een afhaalpunt</small></div></li>
+        <li>{% render 'icon', name: 'cart', size: 20 %}<div><strong>Gratis verzending vanaf €{{ settings.free_shipping_threshold }}</strong><small>Anders {{ settings.shipping_cost_text }}</small></div></li>
+        <li>{% render 'icon', name: 'card', size: 20 %}<div><strong>iDeal, Klarna, creditcard, Bancontact</strong><small>Veilig betalen</small></div></li>
+      </ul>
+
+      <div class="accordions">
+        <details class="acc" open>
+          <summary>Beschrijving {% render 'icon', name: 'chevron', size: 18 %}</summary>
+          <div class="rte">{{ product.description }}</div>
+        </details>
+        <details class="acc">
+          <summary>Verzending &amp; retour {% render 'icon', name: 'chevron', size: 18 %}</summary>
+          <div class="rte">
+            <p>{{ settings.delivery_promise }}. Gratis verzending vanaf €{{ settings.free_shipping_threshold }}, anders {{ settings.shipping_cost_text }}.</p>
+            <p>Past het niet? Regel je retour eenvoudig via ons <a href="{{ section.settings.return_link }}">retourportaal</a>.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Productverzorging {% render 'icon', name: 'chevron', size: 18 %}</summary>
+          <div class="rte"><p>{{ section.settings.care_text }}</p></div>
+        </details>
+      </div>
+
+      <button type="button" class="link-btn share-btn" data-copy-link="{{ shop.url }}{{ product.url }}">Link kopiëren</button>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Productpagina",
+  "settings": [
+    { "type": "url", "id": "return_link", "label": "Link retourportaal" },
+    { "type": "textarea", "id": "care_text", "label": "Verzorgingstekst", "default": "Maak je schoenen schoon met een zachte, licht vochtige doek en laat ze op kamertemperatuur drogen." }
+  ]
+}
+{% endschema %}

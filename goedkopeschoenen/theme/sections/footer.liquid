@@ -1,0 +1,51 @@
+<footer class="site-footer">
+  <div class="page-width footer-grid">
+    <div>
+      <a href="{{ routes.root_url }}" class="logo">{% render 'logo-icon' %}<span class="logo-text heading-font">{{ settings.logo_text }}</span></a>
+      <div class="footer-kiyoh">{% render 'stars', rating: 5, size: 14 %} <strong>{{ settings.kiyoh_score }}</strong> / {{ settings.kiyoh_count }} reviews</div>
+      <p class="muted small">{{ section.settings.about }}</p>
+    </div>
+    <div>
+      <h3 class="footer-title">{{ linklists[section.settings.service_menu].title | default: 'Klantenservice' }}</h3>
+      <ul>{% for link in linklists[section.settings.service_menu].links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h3 class="footer-title">{{ linklists[section.settings.shop_menu].title | default: 'Shop' }}</h3>
+      <ul>{% for link in linklists[section.settings.shop_menu].links %}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h3 class="footer-title">Over ons</h3>
+      <address class="footer-contact">
+        {{ settings.company_name }}<br>{{ settings.company_address }}<br>
+        <a href="tel:{{ settings.company_phone | remove: '-' | remove: ' ' }}">{{ settings.company_phone }}</a><br>
+        <a href="mailto:{{ settings.company_email }}">{{ settings.company_email }}</a><br>
+        KvK {{ settings.company_kvk }} · BTW {{ settings.company_btw }}
+      </address>
+    </div>
+  </div>
+  <div class="page-width footer-bottom">
+    <div class="footer-social">
+      {%- if settings.social_facebook != blank -%}<a href="{{ settings.social_facebook }}" rel="noopener" target="_blank">Facebook</a>{%- endif -%}
+      {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" rel="noopener" target="_blank">Instagram</a>{%- endif -%}
+      {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" rel="noopener" target="_blank">TikTok</a>{%- endif -%}
+    </div>
+    <ul class="payment-icons" aria-label="Betaalmethoden">
+      {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>{%- endfor -%}
+    </ul>
+    <div class="footer-legal">
+      {%- for link in linklists[section.settings.legal_menu].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      <span>© {{ 'now' | date: '%Y' }} {{ settings.company_name }}</span>
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "textarea", "id": "about", "label": "Korte merktekst", "default": "Scherp geprijsde damesschoenen, tassen en accessoires — sinds 2012." },
+    { "type": "link_list", "id": "service_menu", "label": "Klantenservice-menu", "default": "footer" },
+    { "type": "link_list", "id": "shop_menu", "label": "Shop-menu", "default": "main-menu" },
+    { "type": "link_list", "id": "legal_menu", "label": "Juridische links", "default": "footer" }
+  ]
+}
+{% endschema %}

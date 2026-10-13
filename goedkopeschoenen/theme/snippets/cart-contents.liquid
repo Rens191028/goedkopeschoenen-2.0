@@ -1,0 +1,50 @@
+{%- comment -%} Gedeeld door cart-drawer en main-cart. {%- endcomment -%}
+{%- assign threshold = settings.free_shipping_threshold | default: 65 | times: 100 -%}
+{%- assign remaining = threshold | minus: cart.total_price -%}
+{%- assign progress = cart.total_price | times: 100 | divided_by: threshold -%}
+{%- if progress > 100 -%}{%- assign progress = 100 -%}{%- endif -%}
+{%- if cart.item_count > 0 -%}
+  <div class="ship-progress">
+    <p class="ship-progress-text">
+      {%- if remaining > 0 -%}Nog <strong>{{ remaining | money }}</strong> tot gratis verzending
+      {%- else -%}Top! Je bestelling wordt <strong>gratis verzonden</strong>{%- endif -%}
+    </p>
+    <div class="ship-progress-track"><div class="ship-progress-bar" style="width: {{ progress }}%"></div></div>
+  </div>
+  <ul class="cart-lines">
+    {%- for item in cart.items -%}
+      <li class="cart-line" data-line="{{ forloop.index }}">
+        <a href="{{ item.url }}" class="cart-line-img">
+          {%- if item.image -%}{{ item.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: item.image.alt | default: item.product.title }}{%- endif -%}
+        </a>
+        <div class="cart-line-info">
+          <a href="{{ item.url }}" class="cart-line-title">{{ item.product.title }}</a>
+          {%- unless item.product.has_only_default_variant -%}<span class="cart-line-variant">{{ item.variant.title }}</span>{%- endunless -%}
+          <div class="cart-line-price">
+            {%- if item.original_price > item.final_price -%}<s class="price-was">{{ item.original_price | money }}</s>{%- endif -%}
+            <span>{{ item.final_price | money }}</span>
+          </div>
+        </div>
+        <div class="cart-line-actions">
+          <div class="qty" data-qty>
+            <button type="button" data-line-change="{{ forloop.index }}" data-quantity="{{ item.quantity | minus: 1 }}" aria-label="Minder">−</button>
+            <span aria-live="polite">{{ item.quantity }}</span>
+            <button type="button" data-line-change="{{ forloop.index }}" data-quantity="{{ item.quantity | plus: 1 }}" aria-label="Meer">+</button>
+          </div>
+          <button type="button" class="link-btn" data-line-change="{{ forloop.index }}" data-quantity="0">Verwijderen</button>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+  <div class="cart-summary">
+    <div class="cart-total"><span>Totaal</span><strong>{{ cart.total_price | money }}</strong></div>
+    <p class="muted small">Incl. btw. Verzendkosten: gratis vanaf {{ threshold | money_without_trailing_zeros }}, anders {{ settings.shipping_cost_text }}.</p>
+    <a href="{{ routes.cart_url }}" class="btn btn-secondary btn-block cart-view-link">Bekijk winkelwagen</a>
+    <form action="{{ routes.cart_url }}" method="post"><button type="submit" name="checkout" class="btn btn-primary btn-block">Afrekenen {% render 'icon', name: 'arrow', size: 16 %}</button></form>
+  </div>
+{%- else -%}
+  <div class="cart-empty">
+    <p>Je winkelwagen is nog leeg.</p>
+    <a class="btn btn-primary" href="{{ routes.all_products_collection_url }}">Verder winkelen {% render 'icon', name: 'arrow', size: 16 %}</a>
+  </div>
+{%- endif -%}

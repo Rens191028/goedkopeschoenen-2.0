@@ -1,0 +1,92 @@
+{%- assign menu = linklists[section.settings.menu] -%}
+<header class="site-header" data-header>
+  <div class="header-inner">
+    <button class="icon-btn mobile-only" aria-label="Menu openen" data-drawer-open="mobile-nav">{% render 'icon', name: 'menu', size: 22 %}</button>
+    <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }}">
+      {% render 'logo-icon' %}
+      <span class="logo-text heading-font">{{ settings.logo_text }}</span>
+    </a>
+
+    <nav class="main-nav desktop-only" aria-label="Hoofdmenu">
+      {%- for link in menu.links -%}
+        <div class="nav-item-wrap{% if link.links.size > 0 %} has-mega{% endif %}">
+          <a href="{{ link.url }}" class="nav-link{% if link.title == 'Sale' %} nav-link--sale{% endif %}" {% if link.links.size > 0 %}aria-haspopup="true"{% endif %}>{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}
+            <div class="mega-panel">
+              {%- for child in link.links -%}
+                <div>
+                  <p class="mega-col-title"><a href="{{ child.url }}">{{ child.title }}</a></p>
+                  {%- for grandchild in child.links -%}
+                    <a href="{{ grandchild.url }}" class="mega-link">{{ grandchild.title }}</a>
+                  {%- endfor -%}
+                </div>
+              {%- endfor -%}
+              {%- if forloop.first and section.settings.promo_title != blank -%}
+                <div class="mega-promo">
+                  <span class="eyebrow">{{ section.settings.promo_label }}</span>
+                  <span class="heading-font promo-title">{{ section.settings.promo_title }}</span>
+                  <a href="{{ section.settings.promo_link | default: routes.root_url }}" class="promo-link">{{ section.settings.promo_cta }} {% render 'icon', name: 'arrow', size: 13 %}</a>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </nav>
+
+    <div class="header-icons">
+      <button class="icon-btn" aria-label="Zoeken" data-search-toggle>{% render 'icon', name: 'search', size: 19 %}</button>
+      <a class="icon-btn desktop-only" aria-label="Account" href="{{ routes.account_url }}">{% render 'icon', name: 'account', size: 19 %}</a>
+      <button class="icon-btn cart-btn" aria-label="Winkelwagen openen" data-drawer-open="cart-drawer">
+        {% render 'icon', name: 'cart', size: 20 %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="search-panel" data-search-panel hidden>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      <input type="search" name="q" class="field" placeholder="Zoek schoenen, tassen, accessoires…" autocomplete="off" aria-label="Zoeken" data-search-input>
+      <input type="hidden" name="type" value="product">
+      <button class="btn btn-primary" type="submit">Zoeken</button>
+    </form>
+    <div class="search-results" data-search-results></div>
+  </div>
+</header>
+
+<div class="drawer drawer--left" id="mobile-nav" aria-hidden="true" data-drawer>
+  <div class="drawer-overlay" data-drawer-close></div>
+  <div class="drawer-panel" role="dialog" aria-label="Menu">
+    <div class="drawer-head"><span class="heading-font">Menu</span><button class="icon-btn" aria-label="Sluiten" data-drawer-close>{% render 'icon', name: 'close', size: 20 %}</button></div>
+    <div class="drawer-body mobile-nav">
+      {%- for link in menu.links -%}
+        {%- if link.links.size > 0 -%}
+          <details class="acc">
+            <summary>{{ link.title }} {% render 'icon', name: 'chevron', size: 18 %}</summary>
+            {%- for child in link.links -%}
+              <p class="mega-col-title"><a href="{{ child.url }}">{{ child.title }}</a></p>
+              {%- for grandchild in child.links -%}<a href="{{ grandchild.url }}" class="mega-link">{{ grandchild.title }}</a>{%- endfor -%}
+            {%- endfor -%}
+          </details>
+        {%- else -%}
+          <a href="{{ link.url }}" class="mobile-nav-link{% if link.title == 'Sale' %} nav-link--sale{% endif %}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+      <a href="{{ routes.account_url }}" class="mobile-nav-link">Account</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Hoofdmenu", "default": "main-menu", "info": "Opbouw voor mega-menu: hoofdlink → kolomtitel → links." },
+    { "type": "header", "content": "Promo-blok in mega-menu (eerste menu-item)" },
+    { "type": "text", "id": "promo_label", "label": "Label", "default": "Deze week" },
+    { "type": "text", "id": "promo_title", "label": "Titel", "default": "Pantoffels 2 voor €24,99" },
+    { "type": "text", "id": "promo_cta", "label": "Knoptekst", "default": "Bekijk de sale" },
+    { "type": "url", "id": "promo_link", "label": "Link" }
+  ]
+}
+{% endschema %}

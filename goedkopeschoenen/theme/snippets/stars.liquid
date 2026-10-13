@@ -1,0 +1,6 @@
+{%- comment -%} {% render 'stars', rating: 5, size: 13 %} {%- endcomment -%}
+<span class="stars-row" role="img" aria-label="{{ rating }} van 5 sterren">
+  {%- for i in (1..5) -%}
+    <span class="star {% if i > rating %}star--empty{% endif %}">{% render 'icon', name: 'star', size: size | default: 14 %}</span>
+  {%- endfor -%}
+</span>

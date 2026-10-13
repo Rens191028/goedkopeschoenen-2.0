@@ -1,0 +1,10 @@
+{%- paginate search.results by 24 -%}
+<section class="page-width section-pad">
+  <h1 class="heading-font">Zoekresultaten{% if search.terms %} voor “{{ search.terms | escape }}”{% endif %}</h1>
+  <div class="product-grid">
+    {%- for item in search.results -%}{%- if item.object_type == 'product' -%}{% render 'product-card', product: item, index: forloop.index0 %}{%- endif -%}{%- else -%}<p>Geen resultaten.</p>{%- endfor -%}
+  </div>
+  {%- if paginate.pages > 1 -%}<nav class="pagination">{% if paginate.previous %}<a href="{{ paginate.previous.url }}">← Vorige</a>{% endif %}<span>Pagina {{ paginate.current_page }} van {{ paginate.pages }}</span>{% if paginate.next %}<a href="{{ paginate.next.url }}">Volgende →</a>{% endif %}</nav>{%- endif -%}
+</section>
+{%- endpaginate -%}
+{% schema %}{ "name": "Zoeken" }{% endschema %}

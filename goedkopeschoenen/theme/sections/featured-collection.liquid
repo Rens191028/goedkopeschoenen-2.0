@@ -1,0 +1,31 @@
+{%- assign col = section.settings.collection -%}
+<section class="section-pad page-width">
+  <div class="section-head">
+    <div>
+      <h2 class="heading-font">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subtext != blank -%}<p class="muted">{{ section.settings.subtext }}</p>{%- endif -%}
+    </div>
+    <a class="text-link" href="{{ col.url | default: routes.all_products_collection_url }}">Bekijk alles {% render 'icon', name: 'arrow', size: 14 %}</a>
+  </div>
+  <div class="product-grid">
+    {%- if col != blank -%}
+      {%- for product in col.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product, index: forloop.index0 %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..4) -%}<div class="product-card"><div class="product-photo">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div></div>{%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Productgrid",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Kop", "default": "Nieuw binnen" },
+    { "type": "text", "id": "subtext", "label": "Subtekst", "default": "Vers binnengekomen en al in trek" },
+    { "type": "collection", "id": "collection", "label": "Collectie" },
+    { "type": "range", "id": "limit", "label": "Aantal producten", "min": 4, "max": 12, "step": 4, "default": 4 }
+  ],
+  "presets": [{ "name": "Productgrid" }]
+}
+{% endschema %}

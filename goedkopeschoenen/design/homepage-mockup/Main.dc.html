@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>GoedkopeSchoenen.com — Homepage</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: #FAFAF8; color: #141413; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, .heading-font { font-family: 'Archivo', system-ui, sans-serif; }
+  .nav-link { font-size: 14px; font-weight: 500; color: #4A4945; transition: color 180ms ease; }
+  .nav-link:hover { color: #141413; }
+  .btn-primary { background: #B5582E; color: #FFFFFF; transition: background 200ms ease, transform 200ms ease; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: #99471F; }
+  .btn-primary .btn-arrow { transition: transform 220ms cubic-bezier(.3,.7,.2,1); }
+  .btn-primary:hover .btn-arrow { transform: translateX(5px); }
+  .btn-secondary { background: transparent; color: #141413; border: 1.5px solid #D9D6CF; transition: border-color 200ms ease, background 200ms ease; }
+  .btn-secondary:hover { border-color: #141413; background: #F0EEE8; }
+  .icon-btn { transition: background 180ms ease; }
+  .icon-btn:hover { background: #F0EEE8; }
+  .floating-card { background: #FFFFFF; border: 1px solid #EAE7E0; box-shadow: 0 16px 36px rgba(20,20,19,0.12); will-change: transform; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes floatCard {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .a-0 { animation: fadeUp 560ms cubic-bezier(.2,.7,.2,1) 0ms both; }
+  .a-1 { animation: fadeUp 560ms cubic-bezier(.2,.7,.2,1) 90ms both; }
+  .a-2 { animation: fadeUp 560ms cubic-bezier(.2,.7,.2,1) 180ms both; }
+  .a-3 { animation: fadeUp 560ms cubic-bezier(.2,.7,.2,1) 270ms both; }
+  .a-4 { animation: fadeUp 560ms cubic-bezier(.2,.7,.2,1) 360ms both; }
+  .a-img { animation: fadeIn 700ms ease-out 120ms both; }
+  .a-card-1 { animation: floatCard 620ms cubic-bezier(.2,.7,.2,1) 520ms both; }
+  .a-card-2 { animation: floatCard 620ms cubic-bezier(.2,.7,.2,1) 640ms both; }
+  .hero-visual {
+    width: 100%; max-width: 460px; aspect-ratio: 4 / 5; margin: 0 auto; border-radius: 24px;
+    display: flex; align-items: center; justify-content: center; position: relative;
+    will-change: transform; transform-style: preserve-3d;
+  }
+  .hero-visual::before {
+    content: ""; position: absolute; inset: 0; border-radius: 24px;
+    background: linear-gradient(155deg, #EFE9E0 0%, #E3DCCF 55%, #D8CEBC 100%); z-index: 0;
+  }
+  .hero-visual-inner { position: relative; z-index: 1; }
+  .tilt-wrap { perspective: 1000px; }
+  .usp-bar { background: #141413; color: #F5F4F1; }
+
+  /* Mega menu */
+  .nav-item-wrap { position: relative; }
+  .mega-panel {
+    position: absolute; top: calc(100% + 18px); left: 50%; transform-origin: top center;
+    width: min(880px, 86vw); margin-left: -440px; background: #FFFFFF; border: 1px solid #EAE7E0;
+    border-radius: 16px; box-shadow: 0 24px 60px rgba(20,20,19,0.14); padding: 32px; z-index: 40;
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1.1fr; gap: 28px; box-sizing: border-box;
+  }
+  .mega-col-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #8C8679; margin: 0 0 14px; }
+  .mega-link { display: block; font-size: 14.5px; color: #353430; padding: 7px 0; transition: color 160ms ease, transform 160ms ease; }
+  .mega-link:hover { color: #B5582E; transform: translateX(2px); }
+  .mega-promo { border-radius: 12px; background: linear-gradient(155deg, #F3ECE2 0%, #E6DCC9 100%); padding: 20px; display: flex; flex-direction: column; gap: 10px; height: 100%; box-sizing: border-box; }
+
+  /* Product grid */
+  .section-pad { padding: 64px 32px; box-sizing: border-box; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .product-card { display: flex; flex-direction: column; gap: 12px; }
+  .product-photo { position: relative; aspect-ratio: 1 / 1.1; border-radius: 16px; overflow: hidden; background: linear-gradient(155deg, #EFE9E0 0%, #E3DCCF 100%); transition: transform 320ms cubic-bezier(.2,.8,.2,1); }
+  .product-card:hover .product-photo { transform: translateY(-4px); box-shadow: 0 20px 36px rgba(20,20,19,0.14); }
+  .product-photo-alt { position: absolute; inset: 0; background: linear-gradient(205deg, #E6DCC9 0%, #D8CEBC 100%); opacity: 0; transition: opacity 320ms ease; display: flex; align-items: center; justify-content: center; }
+  .product-card:hover .product-photo-alt { opacity: 1; }
+  .product-placeholder-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; font-size: 11.5px; font-weight: 600; color: #8C8679; box-sizing: border-box; }
+  .product-badge { position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 999px; z-index: 2; }
+  .badge-new { background: #141413; color: #FFFFFF; }
+  .badge-sale { background: #B5582E; color: #FFFFFF; }
+  .badge-best { background: #FFFFFF; color: #141413; border: 1px solid #E4E1D9; }
+  .quick-add { position: absolute; bottom: 10px; left: 10px; right: 10px; background: #FFFFFF; border-radius: 10px; padding: 10px; text-align: center; font-size: 12.5px; font-weight: 700; opacity: 0; transform: translateY(8px); transition: opacity 220ms ease, transform 220ms ease; z-index: 2; cursor: pointer; }
+  .product-card:hover .quick-add { opacity: 1; transform: translateY(0); }
+  .price-row { display: flex; align-items: baseline; gap: 8px; }
+  .price-was { font-size: 13px; color: #A6A29A; text-decoration: line-through; }
+  .price-now { font-size: 15.5px; font-weight: 700; color: #B5582E; }
+  .price-plain { font-size: 15.5px; font-weight: 700; color: #141413; }
+
+  /* Trust section */
+  .trust-section { background: #F3F1EC; }
+  .stars-row svg { margin-right: 2px; }
+  .review-card { background: #FFFFFF; border: 1px solid #EAE7E0; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .trust-foot { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; padding-top: 28px; margin-top: 28px; border-top: 1px solid #E4E1D9; font-size: 12.5px; color: #8C8679; }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr !important; }
+    .hero-copy { text-align: center; align-items: center !important; }
+    .hero-cta-row { justify-content: center !important; }
+    .usp-bar-inner { flex-wrap: wrap; gap: 16px !important; justify-content: center !important; text-align: center; }
+    .mega-panel { display: none !important; }
+    .product-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    .trust-grid { grid-template-columns: 1fr !important; }
+    .trust-stat { text-align: center; align-items: center !important; }
+  }
+  @media (max-width: 560px) {
+    .product-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+</helmet>
+
+<div style="width: 100%; max-width: 1440px; margin: 0 auto; box-sizing: border-box; overflow-x: clip;">
+
+  <!-- Top announcement strip -->
+  <div style="background: #141413; color: #D9D6CF; font-size: 12.5px; text-align: center; padding: 8px 16px; letter-spacing: 0.02em;">
+    Zoolblij met elke bestelling — gratis verzending vanaf €65 · achteraf betalen met Klarna
+  </div>
+
+  <!-- Header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 32px; flex-wrap: wrap; position: relative;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true">
+        <rect x="6" y="28" width="30" height="7" rx="3.5" transform="rotate(-18 6 28)" fill="#141413"></rect>
+        <rect x="10" y="18" width="30" height="7" rx="3.5" transform="rotate(-18 10 18)" fill="#141413"></rect>
+        <rect x="14" y="8" width="24" height="7" rx="3.5" transform="rotate(-18 14 8)" fill="#B5582E"></rect>
+      </svg>
+      <span class="heading-font" style="font-size: 21px; font-weight: 800; letter-spacing: -0.01em;">GoedkopeSchoenen</span>
+    </div>
+
+    <nav style="display: flex; align-items: center; gap: 32px;">
+      <div class="nav-item-wrap" onMouseEnter="{{onMenuEnter}}" onMouseLeave="{{onMenuLeave}}">
+        <a href="#" class="nav-link">Schoenen</a>
+        <div class="mega-panel" style="{{menuStyle}}">
+          <div>
+            <p class="mega-col-title">Sneakers</p>
+            <a href="#" class="mega-link">Witte sneakers</a>
+            <a href="#" class="mega-link">Chunky sneakers</a>
+            <a href="#" class="mega-link">Lage sneakers</a>
+            <a href="#" class="mega-link">Hoge sneakers</a>
+          </div>
+          <div>
+            <p class="mega-col-title">Laarzen &amp; boots</p>
+            <a href="#" class="mega-link">Enkellaarzen</a>
+            <a href="#" class="mega-link">Chelsea boots</a>
+            <a href="#" class="mega-link">Regenlaarzen</a>
+          </div>
+          <div>
+            <p class="mega-col-title">Instappers &amp; pantoffels</p>
+            <a href="#" class="mega-link">Loafers</a>
+            <a href="#" class="mega-link">Pantoffels</a>
+            <a href="#" class="mega-link">Instapper-sneakers</a>
+          </div>
+          <div class="mega-promo">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #99471F;">Deze week</span>
+            <span class="heading-font" style="font-size: 19px; font-weight: 800; line-height: 1.2;">Pantoffels<br>2 voor €24,99</span>
+            <a href="#" style="margin-top: auto; font-size: 13.5px; font-weight: 700; color: #141413; display: inline-flex; align-items: center; gap: 4px;">
+              Bekijk de sale
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="#141413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a href="#" class="nav-link">Tassen</a>
+      <a href="#" class="nav-link">Accessoires</a>
+      <a href="#" class="nav-link" style="color: #B5582E; font-weight: 600;">Sale</a>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="icon-btn" aria-label="Zoeken" style="background: none; border: none; width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="#141413" stroke-width="1.8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="#141413" stroke-width="1.8" stroke-linecap="round"></line></svg>
+      </button>
+      <button class="icon-btn" aria-label="Account" style="background: none; border: none; width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.6" stroke="#141413" stroke-width="1.8"></circle><path d="M4.5 20c1.6-3.6 4.6-5.4 7.5-5.4s5.9 1.8 7.5 5.4" stroke="#141413" stroke-width="1.8" stroke-linecap="round"></path></svg>
+      </button>
+      <button class="icon-btn" aria-label="Winkelwagen" style="background: none; border: none; width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative;">
+        <svg width="20" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6" stroke="#141413" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="9.5" cy="20.5" r="1.4" fill="#141413"></circle><circle cx="17" cy="20.5" r="1.4" fill="#141413"></circle></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero-grid" style="display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; padding: 40px 32px 72px; box-sizing: border-box;">
+
+    <div class="hero-copy" style="display: flex; flex-direction: column; align-items: flex-start; gap: 24px;">
+
+      <div class="a-0" style="display: inline-flex; align-items: center; gap: 8px; background: #F0EEE8; border: 1px solid #E4E1D9; border-radius: 999px; padding: 7px 14px 7px 10px; font-size: 13px; font-weight: 600; color: #4A4945;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="#B5582E" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+        9,3 Kiyoh-score · 6.531 beoordelingen
+      </div>
+
+      <h1 class="a-1 heading-font" style="margin: 0; font-size: 56px; line-height: 1.04; font-weight: 800; letter-spacing: -0.02em; color: #141413;">
+        Scherpe schoenen,<br>zonder gedoe.
+      </h1>
+
+      <p class="a-2" style="margin: 0; max-width: 460px; font-size: 17px; line-height: 1.55; color: #5B5953;">
+        Dames schoenen, tassen en accessoires vanaf €13,99. Zorgvuldig uitgezocht, scherp geprijsd — vandaag besteld is morgen in huis.
+      </p>
+
+      <div class="hero-cta-row a-3" style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <button class="btn-primary" style="border: none; border-radius: 10px; padding: 15px 24px 15px 28px; font-size: 15px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer;">
+          Shop nu
+          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </button>
+        <button class="btn-secondary" style="border-radius: 10px; padding: 15px 26px; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer;">
+          Bekijk de sale
+        </button>
+      </div>
+
+      <div class="a-4" style="display: flex; gap: 28px; flex-wrap: wrap; margin-top: 8px; padding-top: 24px; border-top: 1px solid #EAE7E0; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6" stroke="#B5582E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span style="font-size: 13.5px; color: #4A4945; font-weight: 500;">Gratis verzending v.a. €65</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2" stroke="#B5582E" stroke-width="1.8"></rect><line x1="3" y1="10.5" x2="21" y2="10.5" stroke="#B5582E" stroke-width="1.8"></line></svg>
+          <span style="font-size: 13.5px; color: #4A4945; font-weight: 500;">Achteraf betalen met Klarna</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#B5582E" stroke-width="1.8"></circle><path d="M12 7v5l3.5 2" stroke="#B5582E" stroke-width="1.8" stroke-linecap="round"></path></svg>
+          <span style="font-size: 13.5px; color: #4A4945; font-weight: 500;">Same-day verzending</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual with 3D tilt -->
+    <div style="position: relative; width: 100%; display: flex; justify-content: center;">
+      <div class="tilt-wrap" style="width: 100%; max-width: 460px;" onMouseMove="{{onMove}}" onMouseLeave="{{onLeave}}">
+        <div class="hero-visual a-img" style="{{tiltStyle}}">
+          <div class="hero-visual-inner" style="display: flex; flex-direction: column; align-items: center; gap: 10px; color: #8C8679;">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#8C8679" stroke-width="1.5"></rect><circle cx="8.5" cy="8.5" r="1.8" stroke="#8C8679" stroke-width="1.5"></circle><path d="M21 15l-5.5-5.5-9 9" stroke="#8C8679" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span style="font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-align: center; padding: 0 24px;">[PRODUCTFOTO — beweeg muis voor 3D-tilt]</span>
+          </div>
+        </div>
+
+        <div class="floating-card a-card-1" style="position: absolute; top: 8%; right: -6%; border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; transform: {{card1Transform}};">
+          <div style="width: 34px; height: 34px; border-radius: 999px; background: #F0EEE8; display: flex; align-items: center; justify-content: center;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 8H6" stroke="#B5582E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: #141413;">Gratis verzending</div>
+            <div style="font-size: 11.5px; color: #8C8679;">vanaf €65</div>
+          </div>
+        </div>
+
+        <div class="floating-card a-card-2" style="position: absolute; bottom: 10%; left: -8%; border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; transform: {{card2Transform}};">
+          <div style="width: 34px; height: 34px; border-radius: 999px; background: #FBF2E9; display: flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#B5582E" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: #141413;">9,3 / 10</div>
+            <div style="font-size: 11.5px; color: #8C8679;">6.531 Kiyoh-reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USP bar -->
+  <div class="usp-bar" style="padding: 20px 32px;">
+    <div class="usp-bar-inner" style="max-width: 1376px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15.5v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1A19.5 19.5 0 0 1 4.1 11.7 19.8 19.8 0 0 1 1 3.2 2 2 0 0 1 3 1h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .8 2.9a2 2 0 0 1-.4 2.2L7 9.1a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.2-.4c.9.4 1.9.7 2.9.8a2 2 0 0 1 1.7 2z" stroke="#D9D6CF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span style="font-size: 13px; font-weight: 500;">Klantenservice 7 dagen per week</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2" stroke="#D9D6CF" stroke-width="1.6"></rect><line x1="3" y1="10.5" x2="21" y2="10.5" stroke="#D9D6CF" stroke-width="1.6"></line></svg>
+        <span style="font-size: 13px; font-weight: 500;">Veilig betalen met iDeal of Klarna</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8l8-5 8 5-8 5-8-5z" stroke="#D9D6CF" stroke-width="1.6" stroke-linejoin="round"></path><path d="M4 8v8l8 5 8-5V8" stroke="#D9D6CF" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+        <span style="font-size: 13px; font-weight: 500;">499+ producten op voorraad</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z" stroke="#D9D6CF" stroke-width="1.6" stroke-linejoin="round"></path></svg>
+        <span style="font-size: 13px; font-weight: 500;">9,3 op Kiyoh</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product grid: Nieuw binnen -->
+  <div class="section-pad">
+    <div class="section-head">
+      <div>
+        <h2 class="heading-font" style="margin: 0 0 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.01em;">Nieuw binnen</h2>
+        <p style="margin: 0; font-size: 14.5px; color: #8C8679;">Vers binnengekomen en al in trek</p>
+      </div>
+      <a href="#" style="font-size: 14px; font-weight: 700; color: #141413; display: inline-flex; align-items: center; gap: 5px;">
+        Bekijk alles
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="#141413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </a>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-photo">
+          <span class="product-badge badge-sale">-23%</span>
+          <div class="product-placeholder-label">[FOTO]</div>
+          <div class="product-photo-alt"><span style="font-size: 11px; font-weight: 600; color: #6B6660;">[2e FOTO bij hover]</span></div>
+          <div class="quick-add">+ Snel toevoegen</div>
+        </div>
+        <div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">Chunky sneaker — wit</div>
+          <div class="price-row"><span class="price-was">€64,99</span><span class="price-now">€49,99</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-photo">
+          <span class="product-badge badge-new">Nieuw</span>
+          <div class="product-placeholder-label">[FOTO]</div>
+          <div class="product-photo-alt"><span style="font-size: 11px; font-weight: 600; color: #6B6660;">[2e FOTO bij hover]</span></div>
+          <div class="quick-add">+ Snel toevoegen</div>
+        </div>
+        <div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">Enkellaars — zwart</div>
+          <div class="price-row"><span class="price-plain">€59,99</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-photo">
+          <span class="product-badge badge-best">Bestseller</span>
+          <div class="product-placeholder-label">[FOTO]</div>
+          <div class="product-photo-alt"><span style="font-size: 11px; font-weight: 600; color: #6B6660;">[2e FOTO bij hover]</span></div>
+          <div class="quick-add">+ Snel toevoegen</div>
+        </div>
+        <div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">Pantoffel — teddy</div>
+          <div class="price-row"><span class="price-plain">2 voor €24,99</span></div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-photo">
+          <div class="product-placeholder-label">[FOTO]</div>
+          <div class="product-photo-alt"><span style="font-size: 11px; font-weight: 600; color: #6B6660;">[2e FOTO bij hover]</span></div>
+          <div class="quick-add">+ Snel toevoegen</div>
+        </div>
+        <div>
+          <div style="font-size: 14px; font-weight: 600; margin-bottom: 4px;">Loafer — camel</div>
+          <div class="price-row"><span class="price-plain">€44,99</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust section -->
+  <div class="trust-section section-pad">
+    <div class="trust-grid" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 48px; align-items: start;">
+      <div class="trust-stat" style="display: flex; flex-direction: column; gap: 10px;">
+        <span class="heading-font" style="font-size: 44px; font-weight: 800; line-height: 1;">9,3 / 10</span>
+        <div class="stars-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+        </div>
+        <p style="margin: 0; font-size: 14.5px; color: #5B5953; max-width: 320px;">Gebaseerd op 6.531 beoordelingen op Kiyoh — onafhankelijk geverifieerd.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div class="review-card">
+          <div class="stars-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          </div>
+          <p style="margin: 0; font-size: 13.5px; color: #353430; line-height: 1.5;">[Reviewcitaat] "Snel geleverd en precies zoals op de foto."</p>
+          <span style="font-size: 12px; color: #8C8679;">[Naam klant]</span>
+        </div>
+        <div class="review-card">
+          <div class="stars-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          </div>
+          <p style="margin: 0; font-size: 13.5px; color: #353430; line-height: 1.5;">[Reviewcitaat] "Goede prijs-kwaliteit, bestel hier al jaren."</p>
+          <span style="font-size: 12px; color: #8C8679;">[Naam klant]</span>
+        </div>
+        <div class="review-card">
+          <div class="stars-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#B5582E" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B5582E" stroke-width="1.5" style="display:inline"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.3l7.1-.7z"></path></svg>
+          </div>
+          <p style="margin: 0; font-size: 13.5px; color: #353430; line-height: 1.5;">[Reviewcitaat] "Klantenservice denkt goed mee bij ruilen."</p>
+          <span style="font-size: 12px; color: #8C8679;">[Naam klant]</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust-foot">
+      <span>GoedkopeSchoenen.com · Taminiausingel 15, 6662MD Elst</span>
+      <span>KvK 84772018</span>
+      <span>BTW NL863360324B01</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { rotateX: 0, rotateY: 0, hovering: false, menuOpen: false };
+    this.handleMove = this.handleMove.bind(this);
+    this.handleLeave = this.handleLeave.bind(this);
+    this.handleMenuEnter = this.handleMenuEnter.bind(this);
+    this.handleMenuLeave = this.handleMenuLeave.bind(this);
+  }
+
+  handleMove(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    this.setState({ rotateY: px * 26, rotateX: -py * 26, hovering: true });
+  }
+
+  handleLeave() {
+    this.setState({ rotateX: 0, rotateY: 0, hovering: false });
+  }
+
+  handleMenuEnter() {
+    this.setState({ menuOpen: true });
+  }
+
+  handleMenuLeave() {
+    this.setState({ menuOpen: false });
+  }
+
+  renderVals() {
+    const scale = this.state.hovering ? 1.06 : 1;
+    const rx = this.state.rotateX;
+    const ry = this.state.rotateY;
+    const shadowBlur = 36 + Math.abs(ry) * 2.2 + Math.abs(rx) * 1.4;
+    const shadowY = 22 + Math.abs(rx) * 1.6;
+    const shadowX = ry * 1.2;
+    const shadowOpacity = 0.14 + (Math.abs(ry) + Math.abs(rx)) * 0.006;
+    const tiltStyle = `width: 100%; max-width: 460px; aspect-ratio: 4 / 5; margin: 0 auto; border-radius: 24px; display: flex; align-items: center; justify-content: center; position: relative; transform: perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) scale(${scale}); transition: transform 320ms cubic-bezier(.2,.8,.2,1); box-shadow: ${shadowX}px ${shadowY}px ${shadowBlur}px rgba(20,20,19,${shadowOpacity});`;
+    const card1Transform = `translate3d(${-ry * 1.8}px, ${-rx * 1.6 - 4}px, 60px)`;
+    const card2Transform = `translate3d(${-ry * 1.3}px, ${-rx * 1.1 + 4}px, 40px)`;
+    const open = this.state.menuOpen;
+    const menuStyle = `opacity: ${open ? 1 : 0}; transform: translateY(${open ? 0 : -10}px) scale(${open ? 1 : 0.99}); pointer-events: ${open ? 'auto' : 'none'}; transition: opacity 220ms ease, transform 220ms cubic-bezier(.2,.8,.2,1);`;
+    return {
+      onMove: this.handleMove,
+      onLeave: this.handleLeave,
+      onMenuEnter: this.handleMenuEnter,
+      onMenuLeave: this.handleMenuLeave,
+      tiltStyle,
+      card1Transform,
+      card2Transform,
+      menuStyle
+    };
+  }
+}
+</script>
+</body>
+</html>
