@@ -114,9 +114,9 @@ function ProductPage() {
             </p>
             <p className="mt-4 text-muted-foreground">{node.description}</p>
 
-            {node.options.length > 0 && node.options[0].values.length > 1 && (
+            {node.options[0] && node.options[0].values.length > 1 && (
               <div className="mt-6">
-                <p className="mb-2 font-semibold">{node.options[0].name}</p>
+                <p className="mb-2 font-semibold">{node.options[0]?.name}</p>
                 <div className="flex flex-wrap gap-2">
                   {node.variants.edges.map(({ node: variant }) => (
                     <button
